@@ -5,10 +5,10 @@ FROM debian:bullseye
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install nginx and openssl
-RUN apt update && \
-    apt install -y nginx openssl && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y nginx openssl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt-get/lists/*
 
 # Create SSL directory
 RUN mkdir -p /etc/nginx/ssl
@@ -21,7 +21,7 @@ RUN openssl req -x509 -nodes -days 365 \
     -subj "/C=FR/ST=42/L=Paris/O=42/CN=aprevrha.42.fr"
 
 # Copy nginx config and web content
-COPY default.conf /etc/nginx/conf.d/default.conf
+COPY conf/default.conf /etc/nginx/conf.d/default.conf
 
 # Expose HTTPS port
 EXPOSE 443
