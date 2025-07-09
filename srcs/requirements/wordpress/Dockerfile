@@ -15,9 +15,6 @@ RUN mkdir -p /var/www/html
 # Create PHP-FPM run directory
 RUN mkdir -p /run/php
 
-# Permissions
-RUN chown -R www-data:www-data /var/www/html
-
 # Configure PHP-FPM
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
