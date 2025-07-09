@@ -1,13 +1,9 @@
-# Inception Project Makefile
-
-# Variables
 COMPOSE_FILE = srcs/docker-compose.yml
 COMPOSE = docker compose -f $(COMPOSE_FILE)
 DATA_DIR = $(HOME)/data
 
 .PHONY: all up build down clean fclean re setup
 
-# Default target
 all: setup build up
 
 # Setup data directories
