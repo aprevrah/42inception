@@ -31,6 +31,7 @@ clean: down
 fclean: down
 	$(COMPOSE) down -v --rmi all
 	docker system prune -af --volumes
+	sudo rm -rf $(DATA_DIR)/mysql/* $(DATA_DIR)/wordpress/*
 
 # Rebuild everything from scratch
 re: fclean all

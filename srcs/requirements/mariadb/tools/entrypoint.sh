@@ -5,8 +5,8 @@ if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
     echo "Setting up database..."
     
     # Start MariaDB temporarily in safe mode (skip authentication)
-    mysqld_safe --skip-networking --skip-grant-tables &
-    PID=$!
+    mysqld --user=mysql --skip-networking --skip-grant-tables &
+    TEMP_PID=$!
 
     # Wait for MariaDB to be ready
     until mysqladmin ping &>/dev/null; do
@@ -17,6 +17,7 @@ if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
 
     # Create database and user
     mysql -u root << EOF
+FLUSH PRIVILEGES;
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
 CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
@@ -26,7 +27,7 @@ EOF
 
     # Stop temporary MariaDB properly
     mysqladmin -u root -p${MYSQL_ROOT_PASSWORD} shutdown
-    wait $PID
+    wait $TEMP_PID
     echo "Temporary MariaDB stopped"
 else
     echo "Database already initialized, skipping setup."

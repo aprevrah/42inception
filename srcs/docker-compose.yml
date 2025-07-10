@@ -6,6 +6,7 @@ networks:
 services:
   nginx:
     build: ./requirements/nginx
+    image: nginx
     container_name: nginx
     restart: always
     ports:
@@ -19,6 +20,7 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
+    image: wordpress
     container_name: wordpress
     restart: always
     volumes:
@@ -41,6 +43,7 @@ services:
 
   mariadb:
     build: ./requirements/mariadb
+    image: mariadb
     container_name: mariadb
     restart: always
     environment:
